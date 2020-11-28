@@ -42,6 +42,7 @@ const GameBoard = () => {
 }
 
 const Game = (() => {
+    let winner = false;
     let round = 0;
     let history = { squares: Array(9).fill(null),
         round: round,
@@ -56,8 +57,7 @@ const Game = (() => {
 
     const playRound = (e) => {
         // need to fix logic of when winning happens
-        if ( isWinner(history.squares) || e.target.textContent) return;
-        console.log(history.squares)
+        if (winner || e.target.textContent) return;
         let player = history.xIsNext ? 'X': 'O';
         let square = e.target.dataset.square;
         history.squares[square] = player;
@@ -69,6 +69,7 @@ const Game = (() => {
         )
 
         displayController.updateSquare(e, player)
+        isWinner(history.squares)
     }
     
     const isWinner = (squares) => {
@@ -86,7 +87,8 @@ const Game = (() => {
             const [a, b, c] = lines[i];
             if (squares[a] && squares[a] === squares[b] && squares[a] === squares[c]) {
                 console.log('weiner!')
-              return squares[a];
+                winner = true;
+            //   return squares[a];
             }
           }
           return null;
@@ -103,11 +105,6 @@ function handleClick(e) {
 
 
 }
-
-// const gameBody = document.querySelector('.game-board');
-// gameBody.appendChild(displayController.drawRow());
-// gameBody.appendChild(displayController.drawRow());
-// gameBody.appendChild(displayController.drawRow());
 
 displayController.drawBoard();
 const squareButtons = document.querySelectorAll('.square');

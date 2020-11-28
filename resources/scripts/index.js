@@ -62,7 +62,7 @@ const Game = (() => {
         let square = e.target.dataset.square;
         history.squares[square] = player;
     
-        Game.setHistory(
+        setHistory(
             history.squares,
             history.round++,
             !history.xIsNext
@@ -94,6 +94,22 @@ const Game = (() => {
           return null;
     }
 
+    const computerPlayer = () => {
+        // returns good indexes 
+        const validMoves = allValidMoves(history.squares)
+        
+    }
+
+    const _allValidMoves = (array) => {
+        const arr = [];
+        for (const [index, element] of array.entries()) {
+            if (!element) { arr.push(index) }
+        }
+
+        return arr
+    }
+
+
     return {setHistory, playRound}
 
 })();
@@ -109,4 +125,3 @@ function handleClick(e) {
 displayController.drawBoard();
 const squareButtons = document.querySelectorAll('.square');
 squareButtons.forEach(square => square.addEventListener('click', handleClick))
-

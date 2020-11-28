@@ -1,0 +1,38 @@
+Plan:
+
+Players stored in Objects (factory!)
+Object to control flow of game
+gameBoard / displayController -> Module?
+fill squares w/ null. If click and !null return
+        if (calculateWinner(squares) || squares[i]) {
+            return;
+        }
+
+
+Game / Player / Gameboard Objects
+
+
+Gameboard ->
+    Has Square / Render Square?
+    an array of 3 buttons per row
+    x / o to update the square
+
+
+
+Player ->
+
+
+
+Game ->
+    like everything else
+
+
+
+Need to keep track of..
+- what button was clicked (add event listener) (G)
+    -update DOM w/ X or O (GB)
+- who clicked it (G) -> (GB)
+- if its valid ( if !null return ) (G)
+    - so logic for handling game has to be below this
+- if someone won (G)
+    - stop play if they win (G)

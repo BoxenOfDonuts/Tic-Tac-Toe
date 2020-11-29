@@ -26,8 +26,9 @@ const displayController = (() => {
         }
     }
 
-    const updateSquare = (e, player) => {
-        e.target.textContent = player
+    const updateSquare = (square, player) => {
+        const e =  document.querySelector(`button[data-square='${square}']`)
+        e.textContent = player
     }
 
     const updateStatus = (text) => {
@@ -70,10 +71,9 @@ const Game = (() => {
         history.xIsNext = xIsNext;
     }
 
-    const playRound = (e) => {
-        if (winner || e.target.textContent) return;
+    const playRound = (content, square) => {
+        if (winner || content) return;
         let player = history.xIsNext ? player1.getPiece(): player2.getPiece();
-        let square = e.target.dataset.square;
         history.squares[square] = player;
     
         setHistory(
@@ -82,10 +82,10 @@ const Game = (() => {
             !history.xIsNext
         )
 
-        displayController.updateSquare(e, player)
+        displayController.updateSquare(square, player)
         //isWinner(history.squares);
         if (isWinner(history.squares)) {
-            displayController.updateStatus(`Winner, ${history.xIsNext ? player1.getName(): player2.getName()}!`);
+            displayController.updateStatus(`Winner, ${history.xIsNext ? player2.getName(): player1.getName()}!`);
         } else if (!_allValidMoves(history.squares)) {
             displayController.updateStatus("Tie Game!");
         } else {
@@ -121,10 +121,7 @@ const Game = (() => {
         if (!validMoves) {console.log("crap"); return}
         const random = Math.floor(Math.random() * (validMoves.length-1));
 
-        console.log(validMoves[random])
-
-        const e =  document.querySelector(`button[data-square='${validMoves[random]}']`)
-        e.click();
+        return validMoves[random];
 
     }
 
@@ -141,15 +138,16 @@ const Game = (() => {
     }
 
 
-    return {playRound, computerPlayer, _allValidMoves}
+    return {playRound, computerPlayer}
 
 })();
 
 
 function handleClick(e) {
-    // console.log(e.target.textContent)
-    console.log(e)
-    //Game.playRound(e);
+    const content = e.target.textContent;
+    const square = e.target.dataset.square;
+    Game.playRound(content, square);
+    Game.playRound('', Game.computerPlayer());
 
 }
 
@@ -171,15 +169,6 @@ function startGame(e) {
 
 }
 
-// function handleKey(e) {
-//     const player1 = Player(String(this.value))
-//     console.log(player1.getName())
-// }
-
-// const squareButtons = document.querySelectorAll('.square');
-// //const players = document.querySelectorAll('.players input[type=text]');
-// squareButtons.forEach(square => square.addEventListener('click', handleClick));
-// //players.forEach(player => player.addEventListener('keyup', handleKey));
 const startButton = document.querySelector('#start-button');
 startButton.addEventListener('click', startGame);
 let player1, player2;

@@ -41,6 +41,13 @@ const GameBoard = () => {
     }
 }
 
+
+const Player = (name) => {
+    const getName = () => name;
+    
+}
+
+
 const Game = (() => {
     let winner = false;
     let round = 0;
@@ -56,7 +63,6 @@ const Game = (() => {
     }
 
     const playRound = (e) => {
-        // need to fix logic of when winning happens
         if (winner || e.target.textContent) return;
         let player = history.xIsNext ? 'X': 'O';
         let square = e.target.dataset.square;
@@ -96,7 +102,11 @@ const Game = (() => {
 
     const computerPlayer = () => {
         // returns good indexes 
-        const validMoves = allValidMoves(history.squares)
+        const validMoves = _allValidMoves(history.squares)
+        if (validMoves.length === undefined) {console.log("crap"); return}
+        const random = Math.floor(Math.random() * (validMoves.length-1));
+
+        return validMoves[random];
         
     }
 
@@ -110,7 +120,7 @@ const Game = (() => {
     }
 
 
-    return {setHistory, playRound}
+    return {setHistory, playRound, computerPlayer, _allValidMoves,history}
 
 })();
 
@@ -118,6 +128,8 @@ const Game = (() => {
 function handleClick(e) {
     // console.log(e.target.textContent)
     Game.playRound(e);
+    Game.computerPlayer();
+
 
 
 }

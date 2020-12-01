@@ -5,34 +5,48 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tic-Tac-Toe-Fool!</title>
     <link rel="stylesheet" href="resources/styles/index.css">
-    <h1>Tic-Tac-Toe.. Fool!</h1>
+    <link rel="stylesheet" href="https://maxst.icons8.com/vue-static/landings/line-awesome/line-awesome/1.3.0/css/line-awesome.min.css">
+    <h1>Tic Tac Toe.. Fool!</h1>
 </head>
 <body>
     <div class="setup">
-        <div class="players">
+        <div class="start-button">
+            <button class="btn" id='start-button' type="button">Start</button>
+        </div>
+        <!-- <div class="players">
             <label for="name">Player 1</label>
             <input autocomplete="off" type="text" id="player1" placeholder="Enter Name">
-            <div class="player-selection">Human</div>
-            <div class="player-selection">AI</div>
         </div>
         <div class="players">
             <label for="name">Player 2</label>
             <input autocomplete="off" type="text" id="player2" placeholder="Enter Name">
-            <div class="player-selection">Human</div>
-            <div class="player-selection">AI</div>
         </div>
         <div class="start-button">
             <button id='start-button' type="button">Start</button>
-        </div>
+        </div> -->
     </div>
     <div class="game">
-        <div class="game-board">
+        <div class="game-board"></div>
+        <div class="winner"></div>
+    </div>
 
+    <div class="form-popup buttons">
+        <div class="form-container buttons">
+            <button class="btn btn1" id='ai'>AI <i class="las la-robot"></i></button>
+            <button class="btn btn2" id='human'>Human <i class="las la-user-friends"></i></button>
         </div>
     </div>
-    <div class="winner">
-
-    </div>
+    <div class="form-popup players">
+        <div class="form-container players">
+            <form>
+            <label for="name"><b>Player 1</b></label>
+            <input type="text" id="player1" placeholder="Enter Name" autocomplete="off" required=""><br>
+            <label for="name"><b>Player 2</b></label>
+            <input type="text" id="player2" placeholder="Enter Name" autocomplete="off" required=""><br>
+            <input class="btn submit" id="submit-button" type="button" value="Submit">
+            </form>
+        </div>
+      </div>
 <script src="resources/scripts/index.js"></script>
 </body>
 </html>

@@ -1,9 +1,194 @@
- * {
-     margin: 0;
-     padding: 0;
- }
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  text-align: center;
+}
+
+:root {
+  --yellow: #f0d838;
+  --darkyellow: #efa53a;
+  --orange: #e4721f;
+  --lightbrown: #aa4e29;
+  --brown: #7e4029;
+  --green: #9bbc52;
+  --paleyellow: #e4d34d;
+
+  
+  --pink: #ff48c4;
+  --blue: 	#2bd1fc;
+  --yellow: #f3ea5f;
+  --purple: #c04df9;
+  --red: #ff3f3f;
+}
+
+/* so icons aren't clickable */
+button > * {
+  pointer-events: none;
+}
+
+body {
+  min-width: 330px;
+}
+
+
+h1 {
+    color: var(--brown);
+    text-shadow: 4px 4px var(--yellow);
+    font-size: 5rem !important;
+    margin-bottom: 50px;
+    min-width: 100vw;
+}
 
 .square {
-    min-width: 30px;
-    min-height: 30px;
+  min-width: 100px;
+  min-height: 100px;
+  vertical-align: middle;
+  font-size: 2em;
+  background-color: orange;
+  margin: 2px;
+}
+
+.form-popup {
+  display: none;
+  position: fixed;
+  align-self: center;
+  /* border: 3px solid #f1f1f1; */
+  z-index: 9;
+  left: 50%;
+  top: 50%;
+  bottom: auto;
+  right: auto;
+  transform: translate(-50%, -50%);
+}
+
+.form-popup.players {
+  border: 3px solid #f1f1f1;
+}
+
+.form-container.players {
+  display: block;
+  padding: 10px;
+  background-color: #fff;
+  /* background: linear-gradient(to right, var(--yellow) 0%, var(--darkyellow) 20%, var(--orange) 40%, var(--lightbrown) 60%, var(--brown) 80%, var(--paleyellow) 100%); */
+  text-align: center;
+}
+
+/* Full-width input fields */
+.form-container input[type="text"] {
+  width: 100%;
+  padding: 15px;
+  margin: 15px 0 22px 0;
+  border: none;
+  background: #f1f1f1;
+}
+
+.btn {
+  margin: 10px;
+  box-sizing: content-box;
+  min-width: 200px;
+  min-height: 50px;
+  border: none;
+  outline: none;
+  border-radius: 4px;
+  cursor: pointer;
+  padding: 6px;
+  color: #fff;
+  font-weight: 600;
+  background-color: var(--brown);
+  box-shadow: 4px 4px var(--green);
+  letter-spacing: 2px;
+  font-size: 2em;
+  text-align: center;
+}
+
+.btn1 {
+  background-color: var(--lightbrown);
+  box-shadow: 4px 4px var(--darkyellow);
+}
+
+.btn2 {
+  background-color: var(--brown);
+  box-shadow: 4px 4px var(--yellow);
+}
+
+.submit {
+    background-color: var(--brown);
+    box-shadow: 4px 4px var(--green);
+    width: 300px;
+    font-size: 2em;
+}
+
+
+.btn:hover {
+  background-color: var(--orange);
+  box-shadow: 4px 4px var(--paleyellow);
+  transition: 0.1s ease;
+}
+
+.submit:hover {
+    background-color: var(--green);
+    box-shadow: 4px 4px var(--brown);
+    transition: 0.2s ease;
+}
+
+.game {
+  display: flex;
+  flex-direction: column;
+  font-size: 2em;
+  text-align: center;
+  height:100vh;
+  align-items: center;
+  align-content: center;
+  min-width: 330px;
+}
+
+.winner {
+  margin-top: 30px;
+  color: var(--brown);
+  text-shadow: 4px 4px var(--yellow);
+  font-size: 2em;
+}
+
+/* .game-board {
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: repeat(3, 1fr);
+
+} */
+
+.names > div {
+  font-size: 1.5em;
+}
+
+#player1 {
+  position: absolute;
+  left: 10%;
+  top: 15%;
+}
+
+#player2 {
+  position: absolute;
+  right: 10%;
+  top: 15%;
+}
+
+@media only screen and (max-width: 860px) {
+#player1, #player2 {
+  top: 22%;
+}
+
+.game {
+  margin-top: 20px;
+}
+
+  #player1 > div, #player2 > div {
+    display: none;
+  }
+}
+
+@media only screen and (max-width: 420px) {
+  .names {
+    display: none;
+  }
 }

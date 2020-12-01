@@ -36,7 +36,73 @@ const displayController = (() => {
         status.textContent = text
     }
 
-    return {updateSquare, drawBoard, updateStatus}
+    const drawOpponents = () => {
+        // const buttonNode = document.createElement('div');
+        // const setupNode = document.querySelector('.setup');
+        // buttonNode.classList.add('buttons');
+
+
+        // let button1 = document.createElement('button');
+        // let button2 = document.createElement('button');
+
+
+        // button1.classList.add('btn');
+        // button1.innerHTML = 'AI <i class="las la-robot"></i>';
+
+        // button2.classList.add('btn');
+        // button2.innerHTML = 'Human <i class="las la-user-friends"></i>';
+
+        // buttonNode.appendChild(button1);
+        // buttonNode.appendChild(button2);
+
+        // setupNode.firstElementChild.remove();
+        // setupNode.appendChild(buttonNode);
+
+        // const opponents = document.querySelectorAll('.btn');
+        // opponents.forEach(opponent => opponent.addEventListener('click', startGame));
+
+        const game = document.querySelector('.game');
+        const names = document.createElement('div')
+        const p1 = document.createElement('div');
+        const p2 = document.createElement('div');
+        const p1Piece = document.createElement('div');
+        const p2Piece = document.createElement('div');
+
+
+        names.classList.add('names');
+        p1.id="player1";
+        p2.id="player2";
+        p1.textContent = player1.getName();
+        p2.textContent = player2.getName();
+
+        p1Piece.textContent = player1.getPiece();
+        p2Piece.textContent = player2.getPiece();
+        
+        p1.appendChild(p1Piece);
+        p2.appendChild(p2Piece);
+
+        names.appendChild(p1);
+        names.appendChild(p2);
+        game.appendChild(names);
+
+    }
+
+    const showHideForm = (button) => {
+        console.log("show hide " + button)
+        const popup = document.querySelector('.form-popup.buttons');
+        const formPopup = document.querySelector('.form-popup.players');
+        if (button === 'human') {
+            popup.style.display = 'none';
+            // formPopup.style.display = 'block'
+        } else if (button === 'ai') {
+            popup.style.display = 'none';
+        } else {
+            popup.style.display = 'block';
+        }
+    }
+    
+
+    return {updateSquare, drawBoard, updateStatus, showHideForm, drawOpponents}
 
 
 })();
@@ -48,11 +114,12 @@ const GameBoard = () => {
 }
 
 
-const Player = (name, piece) => {
+const Player = (name, piece, ai=false) => {
     const getName = () => name;
     const getPiece = () => piece;
+    const isAi = () => ai;
 
-    return {getName, getPiece}
+    return {getName, getPiece, isAi}
     
 }
 
@@ -91,6 +158,7 @@ const Game = (() => {
         } else {
             displayController.updateStatus(`Next Player ${history.xIsNext ? player1.getName(): player2.getName()}`);
         }
+
     }
     
     const isWinner = (squares) => {
@@ -137,8 +205,37 @@ const Game = (() => {
         }
     }
 
+    const vsWho = (e) => {
+        const buttonId = e.target.id;
+        displayController.showHideForm(buttonId);
+        let ai = false;
 
-    return {playRound, computerPlayer}
+        if (buttonId === 'ai') {
+            ai = true;
+        }
+
+        _startGame(ai);
+
+    }
+
+    const _startGame = (ai) => {
+        displayController.drawBoard()
+        const squareButtons = document.querySelectorAll('.square');
+        squareButtons.forEach(square => square.addEventListener('click', handleClick));
+        // const name1 = document.querySelector('#player1').value || 'Player 1';
+        // const name2 = document.querySelector('#player2').value || 'Player 2';
+        const name1 = 'Player 1'
+        const name2 = ai ? 'Skynet': 'Player 2'
+        const setup = document.querySelector('.setup');
+        player1 = Player(name1, 'X', ai);
+        player2 = Player(name2, 'O', ai);
+        displayController.drawOpponents();
+        displayController.updateStatus(`Next Player ${history.xIsNext ? player1.getName(): player2.getName()}`);
+
+    }
+
+
+    return {playRound, computerPlayer, vsWho}
 
 })();
 
@@ -147,28 +244,35 @@ function handleClick(e) {
     const content = e.target.textContent;
     const square = e.target.dataset.square;
     Game.playRound(content, square);
-    Game.playRound('', Game.computerPlayer());
-
+    if (player2.isAi()) {
+        Game.playRound('', Game.computerPlayer());
+    }
 }
 
-function startGame(e) {
-    const name1 = document.querySelector('#player1').value || 'Player 1';
-    const name2 = document.querySelector('#player2').value || 'Player 2';
-    const setup = document.querySelector('.setup');
+function handleOpponent(e) {
+    const setupNode = document.querySelector('.setup');
+    setupNode.firstElementChild.remove();
 
-    
-    player1 = Player(name1, 'X');
-    player2 = Player(name2, 'O');
+    displayController.showHideForm();
 
-    setup.remove();
-    displayController.drawBoard();
-    const squareButtons = document.querySelectorAll('.square');
-    squareButtons.forEach(square => square.addEventListener('click', handleClick));
-
-
-
+    const startButtons = document.querySelectorAll('.btn');
+    startButtons.forEach(button => button.addEventListener('click', Game.vsWho))
 }
+
+// function getFormData() {
+//     let formData = document.querySelector('form')
+
+//     const name1 = document.querySelector('#player1').value || 'Player 1';
+//     const name2 = document.querySelector('#player2').value || 'Player 2';
+//     const setup = document.querySelector('.setup');
+//     player1 = Player(name1, 'X');
+//     player2 = Player(name2, 'O');
+// }
 
 const startButton = document.querySelector('#start-button');
-startButton.addEventListener('click', startGame);
+const submitForm = document.querySelector('#submit-button')
+startButton.addEventListener('click', handleOpponent);
 let player1, player2;
+
+
+/// notes -- need to get form data on submit I guess

@@ -37,30 +37,6 @@ const displayController = (() => {
     }
 
     const drawOpponents = () => {
-        // const buttonNode = document.createElement('div');
-        // const setupNode = document.querySelector('.setup');
-        // buttonNode.classList.add('buttons');
-
-
-        // let button1 = document.createElement('button');
-        // let button2 = document.createElement('button');
-
-
-        // button1.classList.add('btn');
-        // button1.innerHTML = 'AI <i class="las la-robot"></i>';
-
-        // button2.classList.add('btn');
-        // button2.innerHTML = 'Human <i class="las la-user-friends"></i>';
-
-        // buttonNode.appendChild(button1);
-        // buttonNode.appendChild(button2);
-
-        // setupNode.firstElementChild.remove();
-        // setupNode.appendChild(buttonNode);
-
-        // const opponents = document.querySelectorAll('.btn');
-        // opponents.forEach(opponent => opponent.addEventListener('click', startGame));
-
         const game = document.querySelector('.game');
         const names = document.createElement('div')
         const p1 = document.createElement('div');
@@ -93,7 +69,6 @@ const displayController = (() => {
         const formPopup = document.querySelector('.form-popup.players');
         if (button === 'human') {
             popup.style.display = 'none';
-            // formPopup.style.display = 'block'
         } else if (button === 'ai') {
             popup.style.display = 'none';
         } else {
@@ -104,7 +79,6 @@ const displayController = (() => {
 
     return {updateSquare, drawBoard, updateStatus, showHideForm, drawOpponents}
 
-
 })();
 
 const GameBoard = () => {
@@ -112,7 +86,6 @@ const GameBoard = () => {
         gameBody.appendChild(displayController.drawRow());
     }
 }
-
 
 const Player = (name, piece, ai=false) => {
     const getName = () => name;
@@ -122,7 +95,6 @@ const Player = (name, piece, ai=false) => {
     return {getName, getPiece, isAi}
     
 }
-
 
 const Game = (() => {
     let winner = false;
@@ -222,8 +194,6 @@ const Game = (() => {
         displayController.drawBoard()
         const squareButtons = document.querySelectorAll('.square');
         squareButtons.forEach(square => square.addEventListener('click', handleClick));
-        // const name1 = document.querySelector('#player1').value || 'Player 1';
-        // const name2 = document.querySelector('#player2').value || 'Player 2';
         const name1 = 'Player 1'
         const name2 = ai ? 'Skynet': 'Player 2'
         const setup = document.querySelector('.setup');
@@ -249,6 +219,7 @@ function handleClick(e) {
     }
 }
 
+
 function handleOpponent(e) {
     const setupNode = document.querySelector('.setup');
     setupNode.firstElementChild.remove();
@@ -259,20 +230,8 @@ function handleOpponent(e) {
     startButtons.forEach(button => button.addEventListener('click', Game.vsWho))
 }
 
-// function getFormData() {
-//     let formData = document.querySelector('form')
-
-//     const name1 = document.querySelector('#player1').value || 'Player 1';
-//     const name2 = document.querySelector('#player2').value || 'Player 2';
-//     const setup = document.querySelector('.setup');
-//     player1 = Player(name1, 'X');
-//     player2 = Player(name2, 'O');
-// }
 
 const startButton = document.querySelector('#start-button');
 const submitForm = document.querySelector('#submit-button')
 startButton.addEventListener('click', handleOpponent);
 let player1, player2;
-
-
-/// notes -- need to get form data on submit I guess
